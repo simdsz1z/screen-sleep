@@ -1,0 +1,34 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install Android SDK components
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - name: Build and verify development APK
+        run: python3 build.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: screen-sleep-development-apk
+          path: |
+            build/Screen-sleep.apk
+            build/SHA256SUMS.txt
+          if-no-files-found: error

@@ -1,0 +1,17 @@
+/build/
+__pycache__/
+*.apk
+*.idsig
+*.class
+*.dex
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.pem
+*.key
+.env
+local.properties
+.idea/
+.DS_Store
+Thumbs.db
